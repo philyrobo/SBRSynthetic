@@ -8,8 +8,26 @@
     },
     {
       "name": "Homepage - GoogleBot",
-      "url": "https://www.sunbeltrentals.co.uk/",
+      "url": "https://www.sunbeltrentals.co.uk",
       "userAgent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      "expectedText": "x-sfdc-rendered-at"
+    }, 
+    {
+      "name": "Homepage - OAI GPT Bot",
+      "url": "https://www.sunbeltrentals.co.uk",
+      "userAgent": "Mozilla/5.0 (compatible; GPTBot/1.1; +https://openai.com/gptbot)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+      {
+      "name": "Homepage - Claudebot",
+      "url": "https://www.sunbeltrentals.co.uk",
+      "userAgent": "Mozilla/5.0 (compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+    {
+      "name": "Homepage - PerpelxityBot",
+      "url": "https://www.sunbeltrentals.co.uk",
+      "userAgent": "Mozilla/5.0 (compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)",
       "expectedText": "x-sfdc-rendered-at"
     },
     {
@@ -24,6 +42,24 @@
       "userAgent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
       "expectedText": "x-sfdc-rendered-at"
     }, 
+     {
+      "name": "DepotPage - OAI GPT Bot",
+      "url": "https://www.sunbeltrentals.co.uk/depots/depot/131QH000000n1JRYAY/basildon-wrexham-road",
+      "userAgent": "Mozilla/5.0 (compatible; GPTBot/1.1; +https://openai.com/gptbot)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+      {
+      "name": "DepotPage - Claudebot",
+      "url": "https://www.sunbeltrentals.co.uk/depots/depot/131QH000000n1JRYAY/basildon-wrexham-road",
+      "userAgent": "Mozilla/5.0 (compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+    {
+      "name": "DagePage - PerpelxityBot",
+      "url": "https://www.sunbeltrentals.co.uk/depots/depot/131QH000000n1JRYAY/basildon-wrexham-road",
+      "userAgent": "Mozilla/5.0 (compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
     {
       "name": "Category page - OAI SearchBot",
       "url": "https://www.sunbeltrentals.co.uk/category/hire/air-quality/ventilation/air-purifiers",
@@ -32,8 +68,26 @@
     },
     {
       "name": "Category page - GoogleBot",
-      "url": "https://www.sunbeltrentals.co.uk/depots/depot/131QH000000n1JRYAY/basildon-wrexham-road",
+      "url": "https://www.sunbeltrentals.co.uk/category/hire/air-quality/ventilation/air-purifiers",
       "userAgent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+     {
+      "name": "Category page - OAI GPT Bot",
+      "url": "https://www.sunbeltrentals.co.uk/category/hire/air-quality/ventilation/air-purifiers",
+      "userAgent": "Mozilla/5.0 (compatible; GPTBot/1.1; +https://openai.com/gptbot)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+      {
+      "name": "Category page - Claudebot",
+      "url": "https://www.sunbeltrentals.co.uk/category/hire/air-quality/ventilation/air-purifiers",
+      "userAgent": "Mozilla/5.0 (compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+    {
+      "name": "Category page - PerpelxityBot",
+      "url": "https://www.sunbeltrentals.co.uk/category/hire/air-quality/ventilation/air-purifiers",
+      "userAgent": "Mozilla/5.0 (compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)",
       "expectedText": "x-sfdc-rendered-at"
     },
     {
@@ -48,6 +102,24 @@
       "userAgent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
       "expectedText": "x-sfdc-rendered-at"
     }
+     {
+      "name": "Product page - OAI GPT Bot",
+      "url": "https://www.sunbeltrentals.co.uk/product/electric-coolings-fans-500mm/01tSj000009wF17IAE",
+      "userAgent": "Mozilla/5.0 (compatible; GPTBot/1.1; +https://openai.com/gptbot)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+      {
+      "name": "Product page - Claudebot",
+      "url": "https://www.sunbeltrentals.co.uk/product/electric-coolings-fans-500mm/01tSj000009wF17IAE",
+      "userAgent": "Mozilla/5.0 (compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
+    {
+      "name": "Product page - PerpelxityBot",
+      "url": "https://www.sunbeltrentals.co.uk/product/electric-coolings-fans-500mm/01tSj000009wF17IAE",
+      "userAgent": "Mozilla/5.0 (compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)",
+      "expectedText": "x-sfdc-rendered-at"
+    },
 
   ]
 }
