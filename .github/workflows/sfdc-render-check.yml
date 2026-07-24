@@ -1,0 +1,124 @@
+name: Salesforce Rendered Tag Synthetic Check
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Runs every 30 minutes
+    - cron: "*/60 * * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  check-rendered-tag:
+    name: Check x-sfdc-rendered-at
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run synthetic checks
+        id: synthetic_checks
+        shell: bash
+        run: |
+          set +e
+
+          mkdir -p results responses
+
+          TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          RUN_ID="${GITHUB_RUN_ID}"
+          RESULT_FILE="results/sfdc-render-check-${TIMESTAMP}.csv"
+          SUMMARY_FILE="results/sfdc-render-check-${TIMESTAMP}.md"
+
+          echo "timestamp,run_id,name,url,http_status,response_time_seconds,result,matched_value" > "$RESULT_FILE"
+
+          {
+            echo "# Salesforce rendered tag synthetic check"
+            echo ""
+            echo "**Timestamp:** $TIMESTAMP"
+            echo ""
+            echo "| Check | URL | HTTP status | Response time | Result | Matched value |"
+            echo "|---|---|---:|---:|---|---|"
+          } > "$SUMMARY_FILE"
+
+          OVERALL_FAILURE=0
+
+          jq -c '.checks[]' config/checks.json | while read -r check; do
+            NAME="$(echo "$check" | jq -r '.name')"
+            URL="$(echo "$check" | jq -r '.url')"
+            USER_AGENT="$(echo "$check" | jq -r '.userAgent')"
+            EXPECTED_TEXT="$(echo "$check" | jq -r '.expectedText')"
+
+            SAFE_NAME="$(echo "$NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g')"
+            BODY_FILE="responses/${SAFE_NAME}.html"
+
+            echo "Checking: $NAME"
+            echo "URL: $URL"
+            echo "Expected text: $EXPECTED_TEXT"
+
+            CURL_OUTPUT="$(
+              curl "$URL" \
+                -H "user-agent: $USER_AGENT" \
+                --compressed \
+                --location \
+                --silent \
+                --show-error \
+                --output "$BODY_FILE" \
+                --write-out "%{http_code}|%{time_total}" \
+                2>&1
+            )"
+
+            CURL_EXIT_CODE=$?
+
+            if [ $CURL_EXIT_CODE -ne 0 ]; then
+              HTTP_STATUS="000"
+              RESPONSE_TIME="0"
+              RESULT="FAIL"
+              MATCHED_VALUE="curl error: ${CURL_OUTPUT}"
+              OVERALL_FAILURE=1
+            else
+              HTTP_STATUS="$(echo "$CURL_OUTPUT" | cut -d '|' -f 1)"
+              RESPONSE_TIME="$(echo "$CURL_OUTPUT" | cut -d '|' -f 2)"
+
+              MATCHED_VALUE="$(grep -i -m 1 "$EXPECTED_TEXT" "$BODY_FILE" || true)"
+
+              if [ -z "$MATCHED_VALUE" ]; then
+                RESULT="FAIL"
+                MATCHED_VALUE="not found"
+                OVERALL_FAILURE=1
+              else
+                RESULT="PASS"
+                MATCHED_VALUE="$(echo "$MATCHED_VALUE" | sed 's/"/""/g')"
+              fi
+            fi
+
+            echo "$TIMESTAMP,$RUN_ID,\"$NAME\",\"$URL\",$HTTP_STATUS,$RESPONSE_TIME,$RESULT,\"$MATCHED_VALUE\"" >> "$RESULT_FILE"
+
+            {
+              echo "| $NAME | $URL | $HTTP_STATUS | ${RESPONSE_TIME}s | $RESULT | \`$MATCHED_VALUE\` |"
+            } >> "$SUMMARY_FILE"
+
+            echo "Result: $RESULT"
+            echo ""
+          done
+
+          cat "$SUMMARY_FILE" >> "$GITHUB_STEP_SUMMARY"
+
+          if grep -q ",FAIL," "$RESULT_FILE"; then
+            echo "One or more synthetic checks failed."
+            exit 1
+          else
+            echo "All synthetic checks passed."
+          fi
+
+      - name: Upload result logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sfdc-render-check-results
+          path: |
+            results/
+            responses/
+          retention-days: 30
