@@ -2,7 +2,7 @@
   "checks": [
     {
       "name": "Homepage - OAI SearchBot",
-      "url": "https://www.sunbeltrentals.co.uk/",
+      "url": "https://www.sunbeltrentals.co.uk",
       "userAgent": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; OAI-SearchBot/1.0; +https://openai.com/searchbot",
       "expectedText": "x-sfdc-rendered-at"
     },
