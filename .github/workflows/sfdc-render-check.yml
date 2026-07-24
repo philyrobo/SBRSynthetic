@@ -29,7 +29,7 @@ jobs:
 
           TIMESTAMP="$(date -u +"%Y-%m-%dT%H-%M-%SZ")"
           RUN_ID="${GITHUB_RUN_ID}"
-          RESULT_FILE="history/sfdc-render-check-${FILE_TIMESTAMP}.csv"
+          RESULT_FILE="history/sfdc-render-check-${TIMESTAMP}.csv"
           SUMMARY_FILE="results/sfdc-render-check-${TIMESTAMP}.md"
 
           echo "timestamp,run_id,name,url,http_status,response_time_seconds,result,matched_value" > "$RESULT_FILE"
