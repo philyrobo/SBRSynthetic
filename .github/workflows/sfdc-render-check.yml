@@ -27,7 +27,7 @@ jobs:
 
           mkdir -p results responses
 
-          TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          TIMESTAMP="$(date -u +"%Y-%m-%dT%H-%M-%SZ")"
           RUN_ID="${GITHUB_RUN_ID}"
           RESULT_FILE="results/sfdc-render-check-${TIMESTAMP}.csv"
           SUMMARY_FILE="results/sfdc-render-check-${TIMESTAMP}.md"
